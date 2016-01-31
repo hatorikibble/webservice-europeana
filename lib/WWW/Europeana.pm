@@ -23,62 +23,6 @@ has log => (
 
 =head1 METHODS
 
-=head2 search(query=> "Europe", profile=>'standard', rows => 12)
-
-for further explanation of the possible parameters please refer to
-<http://labs.europeana.eu/api/search>
-
-=over 4
-
-=item * query	
-
-The search term(s).
-
-=item * profile	
-
-Profile parameter controls the format and richness of the response. See the possible values of the profile parameter.
-
-=item * qf  
-
-Facet filtering query.
-
-=item * reusability  
-
-Filter by copyright status. Possible values are open, restricted or permission.
-
-=item * media   
-
-Filter by records where an URL to the full media file is present in the edm:isShownBy or edm:hasView metadata and is resolvable.
-
-=item * colourpalette 
-
-Filter by images where one of the colours of an image matches the provided colour code. You can provide this parameter multiple times, the search will then do an 'AND' search on all the provided colours. 
-
-=item * sort 
-
-Sort records by certain fields, currently only timestamp_created and timestamp_update are supported. Use: field+sort_order, example: &sort=timestamp_update+desc
-
-=item * rows 
-
-The number of records to return. Maximum is 100. Defaults to 12. 
-
-=item * start  
-
-The item in the search results to start with when using cursor-based pagination. The first item is 1. Defaults to 1. 
-
-=item * cursor 
-
-Cursor mark from where to start the search result set when using deep pagination. Set to * to start cursor-based pagination.
-
-=item * callback  
-
-Name of a client side callback function.
-
-=item * facet*	
-
-Name of an individual facet. 
-
-=back
 
 =cut
 
@@ -124,7 +68,7 @@ __END__
 
 =head1 NAME
 
-WWW::Europeana - [One line description of module's purpose here]
+WWW::Europeana - access the API of europeana.eu
 
 
 =head1 VERSION
@@ -136,96 +80,67 @@ This document describes WWW::Europeana version 0.0.1
 
     use WWW::Europeana;
 
-=for author to fill in:
-    Brief code example(s) here showing commonest usage(s).
-    This section will be as far as many users bother reading
-    so make it as educational and exeplary as possible.
-  
-  
+    my $Europeana = WWW::Europeana->new(wskey => 'API_KEY');
+    my $result = $Europeana->search(query => "Europe", 
+                                    reusability=> 'open', 
+                                    rows => 3);
+
+    foreach my $item (@{$result->{items}}){
+      print $item->{title}."\n";
+    }
 =head1 DESCRIPTION
 
-=for author to fill in:
-    Write a full description of the module and its features here.
-    Use subsections (=head2, =head3) as appropriate.
+This module is a wrapper around the REST API of Europeana (cf. <http://labs.europeana.eu/api/introduction>). At the moment only a basic search function is implemented.
 
 
-=head1 INTERFACE 
+=head1 CONSTRUCTOR
 
-=for author to fill in:
-    Write a separate section listing the public components of the modules
-    interface. These normally consist of either subroutines that may be
-    exported, or methods that may be called on objects belonging to the
-    classes provided by the module.
+    $Europeana = WWW::Europeana->new(wskey=>'API_KEY')
 
+=over 4
 
-=head1 DIAGNOSTICS
+=item wskey
 
-=for author to fill in:
-    List every single error and warning message that the module can
-    generate (even the ones that will "never happen"), with a full
-    explanation of each problem, one or more likely causes, and any
-    suggested remedies.
-
-=over
-
-=item C<< Error message here, perhaps with %s placeholders >>
-
-[Description of error here]
-
-=item C<< Another error message here >>
-
-[Description of error here]
-
-[Et cetera, et cetera]
+API key, can be requested at <http://labs.europeana.eu/api/registration>
 
 =back
 
-
-=head1 CONFIGURATION AND ENVIRONMENT
-
-=for author to fill in:
-    A full explanation of any configuration system(s) used by the
-    module, including the names and locations of any configuration
-    files, and the meaning of any environment variables or properties
-    that can be set. These descriptions must also include details of any
-    configuration language used.
-  
-WWW::Europeana requires no configuration files or environment variables.
+=head1 METHODS
 
 
-=head1 DEPENDENCIES
+=head2 search(query=> "Europe", profile=>'standard', rows => 12, reusability=> 'open', start => 1)
 
-=for author to fill in:
-    A list of all the other modules that this module relies upon,
-    including any restrictions on versions, and an indication whether
-    the module is part of the standard Perl distribution, part of the
-    module's distribution, or must be installed separately. ]
+for further explanation of the possible parameters please refer to
+<http://labs.europeana.eu/api/search>
 
-None.
+=over 4
+
+=item * query	
+
+The search term(s).
+
+=item * profile	
+
+Profile parameter controls the format and richness of the response. See the possible values of the profile parameter.
+
+=item * reusability  
+
+Filter by copyright status. Possible values are open, restricted or permission.
 
 
-=head1 INCOMPATIBILITIES
+=item * rows 
 
-=for author to fill in:
-    A list of any modules that this module cannot be used in conjunction
-    with. This may be due to name conflicts in the interface, or
-    competition for system or program resources, or due to internal
-    limitations of Perl (for example, many modules that use source code
-    filters are mutually incompatible).
+The number of records to return. Maximum is 100. Defaults to 12. 
 
-None reported.
+=item * start  
 
+The item in the search results to start with when using cursor-based pagination. The first item is 1. Defaults to 1. 
+
+=back
 
 =head1 BUGS AND LIMITATIONS
 
-=for author to fill in:
-    A list of known problems with the module, together with some
-    indication Whether they are likely to be fixed in an upcoming
-    release. Also a list of restrictions on the features the module
-    does provide: data types that cannot be handled, performance issues
-    and the circumstances in which they may arise, practical
-    limitations on the size of data sets, special cases that are not
-    (yet) handled, etc.
+At the moment just a basic subset of the search parameters is implemented.
 
 No bugs have been reported.
 
@@ -236,12 +151,12 @@ L<http://rt.cpan.org>.
 
 =head1 AUTHOR
 
-Peter Mayr  C<< <at.peter.mayr@posteo.de> >>
+Peter Mayr  C<< <pmayr@cpan.org> >>
 
 
 =head1 LICENCE AND COPYRIGHT
 
-Copyright (c) 2015, Peter Mayr C<< <at.peter.mayr@posteo.de> >>. All rights reserved.
+Copyright (c) 2015, Peter Mayr C<< <pmayr@cpan.org> >>. All rights reserved.
 
 This module is free software; you can redistribute it and/or
 modify it under the same terms as Perl itself. See L<perlartistic>.
