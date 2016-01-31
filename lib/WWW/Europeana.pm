@@ -86,7 +86,7 @@ This document describes WWW::Europeana version 0.0.1
                                     rows => 3);
 
     foreach my $item (@{$result->{items}}){
-      print $item->{title}."\n";
+      print $item->{title}->[0]."\n";
     }
 =head1 DESCRIPTION
 
