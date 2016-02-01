@@ -63,7 +63,9 @@ method search(Str :$query, Str :$profile = "standard", Int :$rows = 12, Int :$st
 
  }
 
-1;    # Magic true value required at end of module
+1;
+
+
 __END__
 
 =head1 NAME
@@ -137,6 +139,19 @@ The number of records to return. Maximum is 100. Defaults to 12.
 The item in the search results to start with when using cursor-based pagination. The first item is 1. Defaults to 1. 
 
 =back
+
+=head1 LOGGING
+
+This module uses the L<Log::Any>-Framework. To get logging output use L<Log::Any::Adapter> along with a destination-specific subclass.
+
+For example, to send output to a file via L<Log::Any::Adapter::File>, your application could do this:
+
+   use WWW::Europeana
+   use Log::Any::Adapter ('File', '/path/to/file.log');
+
+   my $Europeana = WWW::Europeana->new(wskey=>'API_KEY');
+      $results = $Europeana->search(query=>'Europe');
+
 
 =head1 BUGS AND LIMITATIONS
 
