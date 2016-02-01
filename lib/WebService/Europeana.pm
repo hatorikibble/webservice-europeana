@@ -7,7 +7,7 @@ use version; our $VERSION = qv('0.0.1');
 
 use JSON;
 use Log::Any;
-use LWP::Simple;
+use LWP::UserAgent;
 use Moo;
 use Method::Signatures;
 use Try::Tiny;
@@ -27,7 +27,9 @@ has log => (
 =cut
 
 method search(Str :$query, Str :$profile = "standard", Int :$rows = 12, Int :$start = 1, Str :$reusability ) {
+    my $ua = LWP::UserAgent->new();
     my $query_string = undef;
+    my $response = undef;
     my $json_result  = undef;
     my $result_ref   = undef;
 
@@ -37,6 +39,19 @@ method search(Str :$query, Str :$profile = "standard", Int :$rows = 12, Int :$st
     $query_string .= "&reusability=".$reusability if ($reusability);
 
     $self->log->infof( "Query String: %s", $query_string );
+ 
+    $response = $ua->get($query_string);
+
+    if ($response->is_success) {
+      $json_result = $response->decoded_content;  # or whatever
+    }
+    else {
+      $self->log->errorf("Problem accessing the API: %s!",
+			 $response->status_line);
+      $result_ref->{success} = 0;
+      $result_ref->{error_msg} = $response->status_line;
+      return $result_ref;
+    }
 
     $json_result = get($query_string);
     try {
