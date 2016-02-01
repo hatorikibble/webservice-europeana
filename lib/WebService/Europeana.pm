@@ -53,7 +53,6 @@ method search(Str :$query, Str :$profile = "standard", Int :$rows = 12, Int :$st
       return $result_ref;
     }
 
-    $json_result = get($query_string);
     try {
         $result_ref = decode_json($json_result);
     }
