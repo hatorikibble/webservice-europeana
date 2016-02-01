@@ -1,4 +1,4 @@
-package WWW::Europeana;
+package WebService:Europeana;
 
 use warnings;
 use strict;
@@ -70,19 +70,19 @@ __END__
 
 =head1 NAME
 
-WWW::Europeana - access the API of europeana.eu
+WebService:Europeana - access the API of europeana.eu
 
 
 =head1 VERSION
 
-This document describes WWW::Europeana version 0.0.1
+This document describes WebService:Europeana version 0.0.1
 
 
 =head1 SYNOPSIS
 
-    use WWW::Europeana;
+    use WebService:Europeana;
 
-    my $Europeana = WWW::Europeana->new(wskey => 'API_KEY');
+    my $Europeana = WebService:Europeana->new(wskey => 'API_KEY');
     my $result = $Europeana->search(query => "Europe", 
                                     reusability=> 'open', 
                                     rows => 3);
@@ -97,7 +97,7 @@ This module is a wrapper around the REST API of Europeana (cf. <http://labs.euro
 
 =head1 CONSTRUCTOR
 
-    $Europeana = WWW::Europeana->new(wskey=>'API_KEY')
+    $Europeana = WebService:Europeana->new(wskey=>'API_KEY')
 
 =over 4
 
@@ -146,10 +146,10 @@ This module uses the L<Log::Any>-Framework. To get logging output use L<Log::Any
 
 For example, to send output to a file via L<Log::Any::Adapter::File>, your application could do this:
 
-   use WWW::Europeana
+   use WebService:Europeana
    use Log::Any::Adapter ('File', '/path/to/file.log');
 
-   my $Europeana = WWW::Europeana->new(wskey=>'API_KEY');
+   my $Europeana = WebService:Europeana->new(wskey=>'API_KEY');
       $results = $Europeana->search(query=>'Europe');
 
 

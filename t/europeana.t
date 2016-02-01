@@ -5,7 +5,7 @@ use Test::More;
 
 
 
-BEGIN { use_ok('WWW::Europeana') || BAIL_OUT("Can't use WWW::Europeana"); }
+BEGIN { use_ok('WebService::Europeana') || BAIL_OUT("Can't use WebService::Europeana"); }
 
 
 

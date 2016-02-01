@@ -12,15 +12,15 @@ Log::Any::Adapter->set('Screen',
 plan skip_all => "environment variable \$WSKEY not set!" unless ($ENV{WSKEY});
 
 
-use_ok( 'WWW::Europeana' );
+use_ok( 'WebService:Europeana' );
 
 
 
-diag( "Testing WWW::Europeana $WWW::Europeana::VERSION" );
+diag( "Testing WebService:Europeana $WebService:Europeana::VERSION" );
 
 
 
-my $Europeana = WWW::Europeana->new(wskey=>$ENV{WSKEY});
+my $Europeana = WebService:Europeana->new(wskey=>$ENV{WSKEY});
 
 my $result = $Europeana->search(query=>"Österreich", rows=>1, profile=>"minimal", reusability=>"open");
 
