@@ -21,11 +21,6 @@ has log => (
     default => sub { Log::Any->get_logger },
 );
 
-=head1 METHODS
-
-
-=cut
-
 method search(Str :$query, Str :$profile = "standard", Int :$rows = 12, Int :$start = 1, Str :$reusability ) {
     my $ua = LWP::UserAgent->new();
     my $query_string = undef;
@@ -82,6 +77,12 @@ method search(Str :$query, Str :$profile = "standard", Int :$rows = 12, Int :$st
 
 __END__
 
+=begin markdown
+
+[![Build Status](https://travis-ci.org/hatorikibble/www-europeana.svg?branch=master)](https://travis-ci.org/hatorikibble/www-europeana)
+
+=end markdown
+
 =head1 NAME
 
 WebService::Europeana - access the API of europeana.eu
@@ -104,6 +105,7 @@ This document describes WebService::Europeana version 0.0.1
     foreach my $item (@{$result->{items}}){
       print $item->{title}->[0]."\n";
     }
+
 =head1 DESCRIPTION
 
 This module is a wrapper around the REST API of Europeana (cf. <http://labs.europeana.eu/api/introduction>). At the moment only a basic search function is implemented.
