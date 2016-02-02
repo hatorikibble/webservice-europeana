@@ -1,5 +1,3 @@
-[![Build Status](https://travis-ci.org/hatorikibble/www-europeana.svg?branch=master)](https://travis-ci.org/hatorikibble/www-europeana)
-
 # NAME
 
 WebService::Europeana - access the API of europeana.eu
@@ -35,7 +33,7 @@ This module is a wrapper around the REST API of Europeana (cf. &lt;http://labs.e
 
 # METHODS
 
-## search(query=> "Europe", profile=>'standard', rows => 12, reusability=> 'open', start => 1)
+## search(query=> "Europe", profile=>"standard", rows => 12, reusability=> 'open', start => 1, qf=> "TYPE:IMAGE")
 
 for further explanation of the possible parameters please refer to
 &lt;http://labs.europeana.eu/api/search>
@@ -59,6 +57,10 @@ for further explanation of the possible parameters please refer to
 - start  
 
     The item in the search results to start with when using cursor-based pagination. The first item is 1. Defaults to 1. 
+
+- qf
+
+    Facet filtering query, eg. "TYPE:IMAGE"
 
 # LOGGING
 
