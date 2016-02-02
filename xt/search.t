@@ -27,6 +27,11 @@ my $result = $Europeana->search(query=>"Österreich", rows=>1, profile=>"minimal
 is($result->{success},1,"Search successful");
 is($result->{itemsCount},1,"Correct number of rows returned");
 
-print Dumper($result);
+$result = $Europeana->search(query=>"where:asdfasdf", rows=>1);
+
+is($result->{success},1,"Search for non-existant place successful");
+is($result->{itemsCount},0,"Zero rows returned");
+
+#print Dumper($result);
 
 done_testing;
