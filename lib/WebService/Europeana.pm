@@ -21,7 +21,10 @@ has log => (
     default => sub { Log::Any->get_logger },
 );
 
-method search(Str :$query, Str :$profile = "standard", Int :$rows = 12, Int :$start = 1, Str :$reusability ) {
+method search(Str :$query, Str :$profile = "standard", Int :$rows = 12, Int :$start = 1, Str :$reusability, Str :$qf ) {
+
+# TODO: qf as an array
+
     my $ua = LWP::UserAgent->new();
     my $query_string = undef;
     my $response = undef;
@@ -32,9 +35,10 @@ method search(Str :$query, Str :$profile = "standard", Int :$rows = 12, Int :$st
         $self->api_url, "search.json", $self->wskey, $rows, url_encode($query), $profile );
 
     $query_string .= "&reusability=".$reusability if ($reusability);
+    $query_string .= "&qf=".$qf if ($qf);
 
     $self->log->infof( "Query String: %s", $query_string );
- 
+   
     $response = $ua->get($query_string);
 
     if ($response->is_success) {
@@ -57,20 +61,26 @@ method search(Str :$query, Str :$profile = "standard", Int :$rows = 12, Int :$st
     };
 
     if ($result_ref) {
-        $self->log->info("Search was a success!")
-          if (
-               ( $result_ref->{success} )
-            && ( $result_ref->{success} == 1 ));
-	}
-        $self->log->infof("%d item(s) of a total of %d results returned", 
+      if (( $result_ref->{success} )
+            && ( $result_ref->{success} == 1 )
+	 ){
+	$self->log->info("Search was a success!");
+      }
+ 
+      if ($result_ref->{itemsCount}){
+	$self->log->infof("%d item(s) of a total of %d results returned", 
 			  $result_ref->{itemsCount},
 			  $result_ref->{totalResults}
-			 ) 
-	  if (($result_ref->{itemsCount}) && ($result_ref->{totalResults}));
-
-        return $result_ref;
-
- }
+			 );
+      }else{
+	$self->log->info("No results found");
+        # add zero count
+	$result_ref->{itemsCount} = 0;
+      }
+ 
+      return $result_ref;
+    }
+  }
 
 1;
 
@@ -126,7 +136,7 @@ API key, can be requested at <http://labs.europeana.eu/api/registration>
 =head1 METHODS
 
 
-=head2 search(query=> "Europe", profile=>'standard', rows => 12, reusability=> 'open', start => 1)
+=head2 search(query=> "Europe", profile=>"standard", rows => 12, reusability=> 'open', start => 1, qf=> "TYPE:IMAGE")
 
 for further explanation of the possible parameters please refer to
 <http://labs.europeana.eu/api/search>
@@ -153,6 +163,10 @@ The number of records to return. Maximum is 100. Defaults to 12.
 =item * start  
 
 The item in the search results to start with when using cursor-based pagination. The first item is 1. Defaults to 1. 
+
+=item * qf
+
+Facet filtering query, eg. "TYPE:IMAGE"
 
 =back
 
