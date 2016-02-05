@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/hatorikibble/www-europeana.svg?branch=master)](https://travis-ci.org/hatorikibble/www-europeana)
+
 # NAME
 
 WebService::Europeana - access the API of europeana.eu

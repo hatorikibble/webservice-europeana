@@ -136,10 +136,10 @@ API key, can be requested at <http://labs.europeana.eu/api/registration>
 =head1 METHODS
 
 
-=head2 search(query=> "Europe", profile=>"standard", rows => 12, reusability=> 'open', start => 1, qf=> "TYPE:IMAGE")
+=head2 search
 
 for further explanation of the possible parameters please refer to
-<http://labs.europeana.eu/api/search>
+L<http://labs.europeana.eu/api/search>
 
 =over 4
 
