@@ -118,7 +118,7 @@ This document describes WebService::Europeana version 0.0.1
 
 =head1 DESCRIPTION
 
-This module is a wrapper around the REST API of Europeana (cf. <http://labs.europeana.eu/api/introduction>). At the moment only a basic search function is implemented.
+This module is a wrapper around the REST API of Europeana (cf. L<http://labs.europeana.eu/api/introduction>). At the moment only a basic search function is implemented.
 
 
 =head1 CONSTRUCTOR
