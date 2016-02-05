@@ -1,12 +1,10 @@
-[![Build Status](https://travis-ci.org/hatorikibble/webservice-europeana.svg?branch=master)](https://travis-ci.org/hatorikibble/webservice-europeana)
-
 # NAME
 
 WebService::Europeana - access the API of europeana.eu
 
 # VERSION
 
-This document describes WebService::Europeana version 0.0.1
+This document describes WebService::Europeana version 0.0.2
 
 # SYNOPSIS
 
@@ -23,7 +21,7 @@ This document describes WebService::Europeana version 0.0.1
 
 # DESCRIPTION
 
-This module is a wrapper around the REST API of Europeana (cf. &lt;http://labs.europeana.eu/api/introduction>). At the moment only a basic search function is implemented.
+This module is a wrapper around the REST API of Europeana (cf. [http://labs.europeana.eu/api/introduction](http://labs.europeana.eu/api/introduction)). At the moment only a basic search function is implemented.
 
 # CONSTRUCTOR
 
@@ -35,10 +33,10 @@ This module is a wrapper around the REST API of Europeana (cf. &lt;http://labs.e
 
 # METHODS
 
-## search(query=> "Europe", profile=>"standard", rows => 12, reusability=> 'open', start => 1, qf=> "TYPE:IMAGE")
+## search
 
 for further explanation of the possible parameters please refer to
-&lt;http://labs.europeana.eu/api/search>
+[http://labs.europeana.eu/api/search](http://labs.europeana.eu/api/search)
 
 - query	
 
@@ -62,7 +60,7 @@ for further explanation of the possible parameters please refer to
 
 - qf
 
-    Facet filtering query, eg. "TYPE:IMAGE"
+    Facet filtering query. This parameter can be a simple string e.g. `qf=>"TYPE:IMAGE"` or an array reference, e.g. `qf=>["TYPE:IMAGE","LANGUAGE:de"]`
 
 # LOGGING
 

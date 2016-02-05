@@ -3,7 +3,7 @@ package WebService::Europeana;
 use warnings;
 use strict;
 
-use version; our $VERSION = qv('0.0.1');
+use version; our $VERSION = qv('0.0.2');
 
 use JSON;
 use Log::Any;
@@ -21,9 +21,7 @@ has log => (
     default => sub { Log::Any->get_logger },
 );
 
-method search(Str :$query, Str :$profile = "standard", Int :$rows = 12, Int :$start = 1, Str :$reusability, Str :$qf ) {
-
-# TODO: qf as an array
+method search(Str :$query, Str :$profile = "standard", Int :$rows = 12, Int :$start = 1, Str :$reusability, Str|ArrayRef :$qf ) {
 
     my $ua = LWP::UserAgent->new();
     my $query_string = undef;
@@ -35,10 +33,18 @@ method search(Str :$query, Str :$profile = "standard", Int :$rows = 12, Int :$st
         $self->api_url, "search.json", $self->wskey, $rows, url_encode($query), $profile );
 
     $query_string .= "&reusability=".$reusability if ($reusability);
-    $query_string .= "&qf=".$qf if ($qf);
+
+    # qf can be  an ArrayRef
+    if (ref($qf) eq 'ARRAY'){
+      foreach my $f (@{$qf}){
+       $query_string .= "&qf=".$f;
+     }
+    }else{
+     $query_string .= "&qf=".$qf if ($qf); 
+    }
 
     $self->log->infof( "Query String: %s", $query_string );
-   
+
     $response = $ua->get($query_string);
 
     if ($response->is_success) {
@@ -97,10 +103,9 @@ __END__
 
 WebService::Europeana - access the API of europeana.eu
 
-
 =head1 VERSION
 
-This document describes WebService::Europeana version 0.0.1
+This document describes WebService::Europeana version 0.0.2
 
 
 =head1 SYNOPSIS
@@ -166,7 +171,7 @@ The item in the search results to start with when using cursor-based pagination.
 
 =item * qf
 
-Facet filtering query, eg. "TYPE:IMAGE"
+Facet filtering query. This parameter can be a simple string e.g. C<< qf=>"TYPE:IMAGE" >> or an array reference, e.g. C<< qf=>["TYPE:IMAGE","LANGUAGE:de"] >>
 
 =back
 
