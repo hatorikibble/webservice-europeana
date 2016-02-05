@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/hatorikibble/www-europeana.svg?branch=master)](https://travis-ci.org/hatorikibble/www-europeana)
+[![Build Status](https://travis-ci.org/hatorikibble/webservice-europeana.svg?branch=master)](https://travis-ci.org/hatorikibble/webservice-europeana)
 
 # NAME
 
